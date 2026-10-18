@@ -23,7 +23,7 @@ const Contact = () => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    // ফর্ম সাবমিট করলে ইমেইল অ্যাপ খুলবে, মেসেজ আগে থেকে লেখা থাকবে
+ 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const body = `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`;
@@ -33,19 +33,19 @@ const Contact = () => {
     return (
         <section id="contact" className="mx-auto max-w-6xl px-5 py-24">
             <div className="grid items-start gap-12 lg:grid-cols-2">
-                {/* বাম পাশ */}
+             
                 <div>
-                    <p className="font-mono text-sm text-violet-300">{"// 04. CONTACT"}</p>
+                    <p className="font-mono text-sm text-violet-300">{"CONTACT"}</p>
 
                     <h2 className="mt-3 text-5xl font-extrabold leading-tight text-white sm:text-6xl">
                         Let&apos;s Build Something Amazing <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent">Together.</span>
                     </h2>
 
                     <p className="mt-6 text-lg text-violet-200/70">
-                        Have a project idea, collaboration opportunity, or just want to connect? I&apos;d love to hear from you.
+                        Have a project idea, collaboration opportunity, or just want to connect? you can contact me here .
                     </p>
 
-                    {/* কন্টাক্ট কার্ড */}
+                 
                     <div className="mt-8 grid gap-4 sm:grid-cols-2">
                         {contactCards.map((card) => (
                             <a key={card.label} href={card.href} target="_blank" className="relative flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl transition hover:border-violet-500/60">
@@ -65,12 +65,12 @@ const Contact = () => {
                     <p className="mt-2 text-sm text-violet-200/60">— TOWFIQUL</p>
                 </div>
 
-                {/* ডান পাশ: ফর্ম */}
+             
                 <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-2xl sm:p-8">
                     <p className="font-mono text-sm text-violet-300">{"// SEND A MESSAGE"}</p>
 
                     <h3 className="mt-3 text-4xl font-extrabold text-white">
-                        I&apos;m all <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent">ears!</span>
+                        Contact to <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent">me!</span>
                     </h3>
 
                     <p className="mt-3 text-sm text-violet-200/70">Fill out the form below and I&apos;ll get back to you as soon as possible.</p>
@@ -108,7 +108,7 @@ const Contact = () => {
                 </div>
             </div>
 
-            {/* নিচের সোশ্যাল বাটন */}
+          
             <div className="mt-14 flex flex-wrap items-center justify-center gap-4">
                 <a href="https://github.com/Tamal-codes" target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition hover:border-violet-500">
                     <FaGithub /> GitHub <FiArrowRight />

@@ -18,12 +18,14 @@ const otherPlaces = [
 
 const linkRowClass = "flex items-center justify-between py-2 text-violet-200/70 transition hover:text-white";
 
+const logoBoxClass = "grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-white/15 bg-black shadow-[0_0_18px_rgba(139,92,246,0.45)]";
+
 const Footer = () => {
     return (
         <footer className="mx-auto max-w-6xl px-5 pb-8 pt-24">
-            {/* ওপরের ধন্যবাদ অংশ */}
+       
             <div className="text-center">
-                <span className="inline-block rounded-full border border-white/10 bg-white/5 px-5 py-2 font-mono text-xs text-violet-200/70">{"// END OF THE JOURNEY"}</span>
+                <span className="inline-block rounded-full border border-white/10 bg-white/5 px-5 py-2 font-mono text-xs text-violet-200/70">{" END OF THE JOURNEY"}</span>
 
                 <h2 className="mt-6 text-5xl font-extrabold text-white sm:text-6xl">
                     Thanks for <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent">Visiting!</span>
@@ -36,12 +38,14 @@ const Footer = () => {
                 <div className="mt-10 h-px w-full bg-gradient-to-r from-transparent via-violet-500/40 to-transparent" />
             </div>
 
-            {/* চার কলাম */}
+        
             <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
-                {/* কলাম ১: লোগো */}
+           
                 <div>
-                    <Link href="/#home" className="flex items-center gap-2.5 text-2xl font-bold text-white">
-                        <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-400 shadow-[0_0_20px_rgba(139,92,246,0.6)]">T</span>
+                    <Link href="/#home" className="flex items-center gap-3 text-2xl font-bold text-white">
+                        <span className={logoBoxClass}>
+                            <img src="/Logo.jpg" alt="TF logo" className="h-full w-full scale-[1.6] object-contain" />
+                        </span>
                         TOWFIQUL
                     </Link>
 
@@ -57,7 +61,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* কলাম ২: Quick Links */}
+         
                 <div>
                     <h3 className="text-lg font-bold text-white">Quick Links</h3>
                     <div className="mt-3 flex flex-col">
@@ -69,7 +73,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* কলাম ৩: Other Places */}
+           
                 <div>
                     <h3 className="text-lg font-bold text-white">Other Places</h3>
                     <div className="mt-3 flex flex-col">
@@ -81,7 +85,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* কলাম ৪: Let's Connect */}
                 <div>
                     <h3 className="text-lg font-bold text-white">Let&apos;s Connect</h3>
                     <p className="mt-3 text-violet-200/70">Open to collaborations, interesting projects, and exciting opportunities.</p>
@@ -92,7 +95,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            {/* নিচের কপিরাইট বার */}
+         
             <div className="mt-14 flex flex-col items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-6 py-4 text-sm text-violet-200/60 backdrop-blur-xl md:flex-row">
                 <p>© 2026 TOWFIQUL. All rights reserved.</p>
                 <p className="font-mono text-xs tracking-widest">IDEAS × CODE × IMPACT</p>

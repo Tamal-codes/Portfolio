@@ -1,15 +1,126 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #07051a;
-  background-image:
-    radial-gradient(50% 40% at 80% 10%, rgba(124, 58, 237, 0.35), transparent 70%),
-    radial-gradient(40% 40% at 10% 60%, rgba(168, 85, 247, 0.2), transparent 70%);
-  background-attachment: fixed;
+  background: transparent;
   color: #f4f2ff;
 }
 
-html {
-  scroll-behavior: smooth;
+.stars,
+.stars::before,
+.stars::after {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.stars {
+  z-index: -5;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 150px 80px, #ffffff, transparent),
+    radial-gradient(1px 1px at 260px 200px, #c4b5fd, transparent),
+    radial-gradient(1px 1px at 90px 240px, #ffffff, transparent);
+  background-size: 300px 300px;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars::before {
+  background-image:
+    radial-gradient(1.5px 1.5px at 60px 120px, #ffffff, transparent),
+    radial-gradient(1px 1px at 220px 40px, #a78bfa, transparent),
+    radial-gradient(1px 1px at 330px 260px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 130px 340px, #e9d5ff, transparent);
+  background-size: 410px 410px;
+  animation: twinkle 6s ease-in-out infinite 1.5s;
+}
+
+.stars::after {
+  background-image:
+    radial-gradient(2px 2px at 100px 60px, #ffffff, transparent),
+    radial-gradient(1px 1px at 300px 180px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 420px 320px, #c4b5fd, transparent),
+    radial-gradient(1px 1px at 200px 440px, #ffffff, transparent);
+  background-size: 530px 530px;
+  animation: twinkle 5s ease-in-out infinite 3s;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .stars::before,
+  .stars::after {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+.shooting-star {
+  position: fixed;
+  z-index: -5;
+  width: 130px;
+  height: 2px;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.8), #ffffff);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  transform: rotate(35deg);
+}
+
+.shooting-star.s1 {
+  top: 8%;
+  left: 12%;
+  animation: shoot 11s linear infinite 2s;
+}
+
+.shooting-star.s2 {
+  top: 14%;
+  left: 55%;
+  animation: shoot 15s linear infinite 7s;
+}
+
+.shooting-star.s3 {
+  top: 4%;
+  left: 78%;
+  animation: shoot 19s linear infinite 12s;
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: rotate(35deg) translateX(0);
+  }
+  2% {
+    opacity: 1;
+  }
+  9% {
+    opacity: 1;
+    transform: rotate(35deg) translateX(700px);
+  }
+  11%,
+  100% {
+    opacity: 0;
+    transform: rotate(35deg) translateX(700px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shooting-star {
+    display: none;
+  }
 }

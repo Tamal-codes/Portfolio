@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { FiArrowRight, FiMenu, FiX } from "react-icons/fi";
 
@@ -16,9 +17,6 @@ const CONNECT_LINK = "https://www.linkedin.com/in/towfiqul-tamal/";
 const navClass =
   "relative mx-auto flex h-16 max-w-6xl items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 backdrop-blur-2xl backdrop-saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.18),0_10px_40px_rgba(10,4,40,0.6)]";
 
-const logoClass =
-  "grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-400 shadow-[0_0_20px_rgba(139,92,246,0.6)]";
-
 const connectClass =
   "hidden items-center gap-2 rounded-full border border-violet-500/70 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-md shadow-[0_0_24px_rgba(124,58,237,0.5),inset_0_1px_0_rgba(255,255,255,0.2)] transition hover:bg-violet-500/25 md:flex";
 
@@ -31,21 +29,31 @@ const mobileConnectClass =
 const underlineClass =
   "pointer-events-none absolute -bottom-0.5 left-0 h-0.5 rounded-full bg-gradient-to-r from-violet-500 to-violet-300 transition-all duration-300 ease-out";
 
+const logoBoxClass =
+  "grid h-11 w-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-white/15 bg-black shadow-[0_0_18px_rgba(139,92,246,0.45)]";
+
 const Navbar = () => {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("home");
+  const [scrollActive, setScrollActive] = useState("home");
   const [bar, setBar] = useState({ left: 0, width: 0, ready: false });
 
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const locked = useRef(false);
   const unlockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // স্ক্রল করলে কোন সেকশনে আছি সেটা ধরা
+
+  const onDetails = pathname.startsWith("/projects");
+  const active = onDetails ? "projects" : scrollActive;
+
+
   useEffect(() => {
+    if (onDetails) return;
+
     const detect = () => {
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5;
       if (atBottom) {
-        setActive(links[links.length - 1].id);
+        setScrollActive(links[links.length - 1].id);
         return;
       }
       const line = window.innerHeight * 0.4;
@@ -54,11 +62,11 @@ const Navbar = () => {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= line) current = id;
       }
-      setActive(current);
+      setScrollActive(current);
     };
 
     const onScroll = () => {
-      // ক্লিকের পর স্ক্রল চলার সময় মাঝের সেকশন ধরা বন্ধ
+  
       if (locked.current) {
         if (unlockTimer.current) clearTimeout(unlockTimer.current);
         unlockTimer.current = setTimeout(() => {
@@ -70,32 +78,54 @@ const Navbar = () => {
       detect();
     };
 
-    detect();
+    
+    const init = setTimeout(() => {
+      // ঠিকানায় #projects এর মতো কিছু থাকলে সরাসরি সেটাই active
+      const hash = window.location.hash.replace("#", "");
+      if (hash && links.some((l) => l.id === hash)) {
+        locked.current = true;
+        setScrollActive(hash);
+        unlockTimer.current = setTimeout(() => {
+          locked.current = false;
+          detect();
+        }, 1200);
+      } else {
+        detect();
+      }
+    }, 0);
+
     window.addEventListener("scroll", onScroll, true);
     window.addEventListener("resize", detect);
     return () => {
+      clearTimeout(init);
       window.removeEventListener("scroll", onScroll, true);
       window.removeEventListener("resize", detect);
       if (unlockTimer.current) clearTimeout(unlockTimer.current);
     };
-  }, []);
+  }, [onDetails]);
 
-  // আন্ডারলাইনের জায়গা আর চওড়া মাপা
+  
   useEffect(() => {
     const measure = () => {
       const index = links.findIndex((l) => l.id === active);
       const el = itemRefs.current[index];
-      if (el) setBar({ left: el.offsetLeft + 16, width: el.offsetWidth - 32, ready: true });
+      if (el) {
+        setBar({ left: el.offsetLeft + 16, width: el.offsetWidth - 32, ready: true });
+      } else {
+        setBar((b) => ({ ...b, ready: false }));
+      }
     };
-    measure();
+    const frame = requestAnimationFrame(measure);
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+    };
   }, [active]);
 
   const handleClick = (id: string) => {
     locked.current = true;
-    setActive(id);
-    // স্ক্রল ইভেন্ট একদমই না এলে (যেমন একই জায়গায় ক্লিক) লক যেন আটকে না থাকে
+    setScrollActive(id);
     if (unlockTimer.current) clearTimeout(unlockTimer.current);
     unlockTimer.current = setTimeout(() => {
       locked.current = false;
@@ -110,8 +140,10 @@ const Navbar = () => {
           className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-violet-300/60 to-transparent"
         />
 
-        <Link href="/#home" onClick={() => handleClick("home")} className="flex items-center gap-2.5 text-lg font-bold text-white">
-          <span className={logoClass}>T</span>
+        <Link href="/#home" onClick={() => handleClick("home")} className="flex items-center gap-3 text-lg font-bold text-white">
+          <span className={logoBoxClass}>
+            <img src="/Logo.jpg" alt="TF logo" className="h-full w-full scale-[1.6] object-contain" />
+          </span>
           TOWFIQUL
         </Link>
 
@@ -123,17 +155,17 @@ const Navbar = () => {
                 itemRefs.current[i] = el;
               }}
             >
-              <a
+              <Link
                 href={`/#${l.id}`}
                 onClick={() => handleClick(l.id)}
                 className={`block rounded-lg px-4 py-2 text-sm font-medium transition-colors duration-300 ${active === l.id ? "text-white" : "text-violet-200/60 hover:text-white"}`}
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
 
-          {/* একটাই আন্ডারলাইন, এটা এক লিংক থেকে আরেক লিংকে পিছলে যায় */}
+         
           <span
             aria-hidden
             className={underlineClass}
@@ -159,7 +191,7 @@ const Navbar = () => {
         <ul className={mobileMenuClass}>
           {links.map((l) => (
             <li key={l.id}>
-              <a
+              <Link
                 href={`/#${l.id}`}
                 onClick={() => {
                   handleClick(l.id);
@@ -168,7 +200,7 @@ const Navbar = () => {
                 className={`block rounded-xl px-4 py-3 ${active === l.id ? "bg-violet-500/15 text-white" : "text-violet-200/70"}`}
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
           <li>
