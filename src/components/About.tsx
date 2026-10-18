@@ -25,7 +25,7 @@ const storyCards = [
         icon: FiCompass,
         label: "My Story",
         title: "Programming Journey",
-        intro: "It all started with curiosity about how websites actually work. I began with HTML, CSS and JavaScript, and loved watching my code turn into something real on the screen.",
+        intro: "It all started when i am in collage  and just learn html . Then i am thinking  about how websites actually work. I began with HTML, CSS and JavaScript, and loved watching my code turn into something real on the screen.",
         extra: "From there I moved to React, Next.js and Tailwind CSS, and started building real projects like Dev-Stack, FIT-LOG and Market-Price. Every project taught me something new.",
         bullets: [] as string[],
         bulletIcon: FiZap,
@@ -56,7 +56,7 @@ const storyCards = [
             "Exploring new tools and tech stacks",
             "Watching tech videos and tutorials",
             "Listening to music",
-            "Playing games with friends",
+            "Travaling",
         ],
         bulletIcon: FiZap,
         footer: "Curious about everything",
@@ -76,7 +76,7 @@ const About = () => {
                     <p className="font-mono text-sm text-violet-300">ABOUT ME</p>
 
                     <h2 className="mt-3 text-5xl font-extrabold leading-tight text-white sm:text-6xl">
-                        More than just a <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent">developer.</span>
+                     Crafting Digital <span className="bg-gradient-to-r from-violet-500 to-violet-300 bg-clip-text text-transparent"> Experiences.</span>
                     </h2>
 
                     <p className="mt-6 text-lg text-violet-200/70">
@@ -116,7 +116,7 @@ const About = () => {
                 </div>
             </div>
 
-      
+           
             <div className="mt-16 grid gap-6 lg:grid-cols-3">
                 {storyCards.map((card) => (
                     <div key={card.title} className={glassCardClass}>
